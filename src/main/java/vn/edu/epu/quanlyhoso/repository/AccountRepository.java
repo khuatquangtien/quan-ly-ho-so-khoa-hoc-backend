@@ -1,8 +1,9 @@
-package vn.edu.epu.quanlyhoso.dao;
+package vn.edu.epu.quanlyhoso.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import vn.edu.epu.quanlyhoso.model.entity.Account;
+
+import vn.edu.epu.quanlyhoso.entity.Account;
 
 import java.util.Optional;
 

@@ -1,4 +1,4 @@
-package vn.edu.epu.quanlyhoso.model.dto;
+package vn.edu.epu.quanlyhoso.dto.request;
 
 import lombok.Data;
 

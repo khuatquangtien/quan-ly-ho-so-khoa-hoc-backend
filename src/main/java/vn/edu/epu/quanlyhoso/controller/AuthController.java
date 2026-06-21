@@ -1,4 +1,4 @@
-package vn.edu.epu.quanlyhoso.view;
+package vn.edu.epu.quanlyhoso.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -6,9 +6,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import vn.edu.epu.quanlyhoso.model.dto.AuthRequest;
-import vn.edu.epu.quanlyhoso.model.dto.AuthResponse;
-import vn.edu.epu.quanlyhoso.model.dto.RegisterRequest;
+
+import vn.edu.epu.quanlyhoso.dto.request.AuthRequest;
+import vn.edu.epu.quanlyhoso.dto.request.RegisterRequest;
+import vn.edu.epu.quanlyhoso.dto.response.AuthResponse;
 import vn.edu.epu.quanlyhoso.service.AuthService;
 
 @RestController

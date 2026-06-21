@@ -1,4 +1,4 @@
-package vn.edu.epu.quanlyhoso.model.dto;
+package vn.edu.epu.quanlyhoso.dto.request;
 
 public class AuthRequest {
     private String username;

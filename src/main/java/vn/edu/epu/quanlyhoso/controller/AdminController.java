@@ -1,9 +1,10 @@
-package vn.edu.epu.quanlyhoso.view;
+package vn.edu.epu.quanlyhoso.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import vn.edu.epu.quanlyhoso.model.dto.UpdateRoleRequest;
+
+import vn.edu.epu.quanlyhoso.dto.request.UpdateRoleRequest;
 import vn.edu.epu.quanlyhoso.service.AdminService;
 
 @RestController
