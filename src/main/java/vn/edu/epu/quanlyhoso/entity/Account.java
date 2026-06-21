@@ -22,7 +22,11 @@ import lombok.Data;
 @Entity
 @Table(name = "accounts")
 public class Account implements UserDetails {
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(nullable = false, unique = true)
