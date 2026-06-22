@@ -1,4 +1,4 @@
-package controller;
+package vn.edu.epu.quanlyhoso.controller;
 
 import model.Paper;
 import model.PaperStatus;

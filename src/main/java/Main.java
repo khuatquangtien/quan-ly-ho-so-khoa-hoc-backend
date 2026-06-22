@@ -1,7 +1,7 @@
 import model.JournalRanking;
 import model.Paper;
 import model.PaperStatus;
-import controller.PaperController;
+import vn.edu.epu.quanlyhoso.controller.PaperController;
 
 public class Main {
     public static void main(String[] args) {
