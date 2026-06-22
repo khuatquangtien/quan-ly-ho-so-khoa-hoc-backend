@@ -1,9 +1,10 @@
-package service;
+package vn.edu.epu.quanlyhoso.service;
 
-import model.Paper;
-import model.PaperStatus;
-import dao.PaperDao;
-import dao.PaperDaoImpl;
+import vn.edu.epu.quanlyhoso.entity.Paper;
+import vn.edu.epu.quanlyhoso.entity.PaperStatus;
+import vn.edu.epu.quanlyhoso.repository.PaperDao;
+import vn.edu.epu.quanlyhoso.repository.PaperDaoImpl;
+
 import java.util.ArrayList;
 import java.util.List;
 

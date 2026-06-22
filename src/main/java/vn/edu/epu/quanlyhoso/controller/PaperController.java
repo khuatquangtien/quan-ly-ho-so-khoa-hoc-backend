@@ -1,9 +1,9 @@
 package vn.edu.epu.quanlyhoso.controller;
 
-import model.Paper;
-import model.PaperStatus;
-import service.PaperService;
-import service.PaperServiceImpl;
+import vn.edu.epu.quanlyhoso.entity.Paper;
+import vn.edu.epu.quanlyhoso.entity.PaperStatus;
+import vn.edu.epu.quanlyhoso.service.PaperService;
+import vn.edu.epu.quanlyhoso.service.PaperServiceImpl;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

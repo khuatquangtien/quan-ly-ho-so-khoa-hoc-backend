@@ -1,7 +1,8 @@
-package service;
+package vn.edu.epu.quanlyhoso.service;
 
-import model.Paper;
-import model.PaperStatus;
+import vn.edu.epu.quanlyhoso.entity.Paper;
+import vn.edu.epu.quanlyhoso.entity.PaperStatus;
+
 import java.util.List;
 
 /**

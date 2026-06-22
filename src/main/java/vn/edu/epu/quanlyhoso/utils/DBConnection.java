@@ -1,4 +1,4 @@
-package utils;
+package vn.edu.epu.quanlyhoso.utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

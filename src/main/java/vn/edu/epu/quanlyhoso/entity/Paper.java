@@ -1,4 +1,4 @@
-package model;
+package vn.edu.epu.quanlyhoso.entity;
 
 import java.sql.Timestamp;
 

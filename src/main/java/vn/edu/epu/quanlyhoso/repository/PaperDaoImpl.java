@@ -1,9 +1,10 @@
-package dao;
+package vn.edu.epu.quanlyhoso.repository;
 
-import model.Paper;
-import model.JournalRanking;
-import model.PaperStatus;
-import utils.DBConnection;
+import vn.edu.epu.quanlyhoso.entity.JournalRanking;
+import vn.edu.epu.quanlyhoso.entity.Paper;
+import vn.edu.epu.quanlyhoso.entity.PaperStatus;
+import vn.edu.epu.quanlyhoso.utils.DBConnection;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -1,7 +1,8 @@
-package utils;
+package vn.edu.epu.quanlyhoso.utils;
 
-import model.Paper;
 import java.time.Year;
+
+import vn.edu.epu.quanlyhoso.entity.Paper;
 
 /**
  * Class ValidationUtils - chứa các hàm static để kiểm tra dữ liệu đầu vào
