@@ -1,7 +1,7 @@
 package vn.edu.epu.quanlyhoso.service;
 
 import java.util.List;
-import javax.persistence.EntityNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vn.edu.epu.quanlyhoso.dto.AssignTopicRequest;
