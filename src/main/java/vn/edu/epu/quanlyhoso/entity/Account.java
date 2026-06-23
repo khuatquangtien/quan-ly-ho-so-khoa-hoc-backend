@@ -21,10 +21,11 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "accounts")
+
 public class Account implements UserDetails {
     /**
 	 * 
-	 */
+	 */	
 	private static final long serialVersionUID = 1L;
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,14 +49,15 @@ public class Account implements UserDetails {
             return List.of(); 
         }
         // 2. Lấy cái chữ "ADMIN" từ DB, nhét vào cái bao bì SimpleGrantedAuthority để Spring nó hiểu
-        return List.of(new SimpleGrantedAuthority(this.role.getRoleName()));
-    }
-    @Override
-    public boolean isAccountNonExpired() { return true; }
-    @Override
-    public boolean isAccountNonLocked() { return true; }
-    @Override
-    public boolean isCredentialsNonExpired() { return true; }
-    @Override
-    public boolean isEnabled() { return true; }
+        return List.of(new SimpleGrantedAuthority(this.role.getRoleName()));}
+        
+        @Override
+        public boolean isAccountNonExpired() { return true; }
+        @Override
+        public boolean isAccountNonLocked() { return true; }
+        @Override
+        public boolean isCredentialsNonExpired() { return true; }
+        @Override
+        public boolean isEnabled() { return true; }
 }
+

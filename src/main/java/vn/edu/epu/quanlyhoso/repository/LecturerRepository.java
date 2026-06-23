@@ -1,13 +1,19 @@
 package vn.edu.epu.quanlyhoso.repository;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import vn.edu.epu.quanlyhoso.entity.Account;
 import vn.edu.epu.quanlyhoso.entity.Lecturer;
 
-import java.util.Optional;
-
 public interface LecturerRepository extends JpaRepository<Lecturer, Integer> {
-    //Tìm hồ sơ dựa vào Account
+
+    Optional<Lecturer> findByAccountId(Integer accountId);
+    
     Optional<Lecturer> findByAccount(Account account);
+    
+    List<Lecturer> findByFaculty(String faculty);
 }
+
