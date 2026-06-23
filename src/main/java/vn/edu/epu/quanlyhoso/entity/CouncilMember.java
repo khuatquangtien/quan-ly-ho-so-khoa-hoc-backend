@@ -1,4 +1,4 @@
-package vn.edu.epu.quanlyhoso.model;
+package vn.edu.epu.quanlyhoso.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

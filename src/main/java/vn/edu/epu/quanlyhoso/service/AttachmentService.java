@@ -17,8 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import vn.edu.epu.quanlyhoso.dto.AttachmentResponse;
-import vn.edu.epu.quanlyhoso.model.Attachment;
-import vn.edu.epu.quanlyhoso.model.AttachmentType;
+import vn.edu.epu.quanlyhoso.entity.Attachment;
+import vn.edu.epu.quanlyhoso.entity.AttachmentType;
 import vn.edu.epu.quanlyhoso.repository.AttachmentRepository;
 
 @Service

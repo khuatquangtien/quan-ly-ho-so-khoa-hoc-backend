@@ -1,7 +1,8 @@
 package vn.edu.epu.quanlyhoso.dto;
 
 import java.time.LocalDateTime;
-import vn.edu.epu.quanlyhoso.model.AttachmentType;
+
+import vn.edu.epu.quanlyhoso.entity.AttachmentType;
 
 public class AttachmentResponse {
 

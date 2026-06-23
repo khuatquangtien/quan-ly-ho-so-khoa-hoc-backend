@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
-import vn.edu.epu.quanlyhoso.model.EvaluationLevel;
+import vn.edu.epu.quanlyhoso.entity.EvaluationLevel;
 
 public class CreateEvaluationRequest {
 

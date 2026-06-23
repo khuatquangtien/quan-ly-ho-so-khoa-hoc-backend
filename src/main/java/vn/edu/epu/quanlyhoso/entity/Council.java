@@ -1,4 +1,4 @@
-package vn.edu.epu.quanlyhoso.model;
+package vn.edu.epu.quanlyhoso.entity;
 
 import java.time.LocalDateTime;
 import jakarta.persistence.Column;

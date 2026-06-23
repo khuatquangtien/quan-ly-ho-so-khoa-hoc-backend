@@ -1,7 +1,7 @@
 package vn.edu.epu.quanlyhoso.dto;
 
 import jakarta.validation.constraints.NotNull;
-import vn.edu.epu.quanlyhoso.model.CouncilRole;
+import vn.edu.epu.quanlyhoso.entity.CouncilRole;
 
 public class CouncilMemberRequest {
 

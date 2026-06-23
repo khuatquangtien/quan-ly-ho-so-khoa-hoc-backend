@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import vn.edu.epu.quanlyhoso.dto.AssignTopicRequest;
 import vn.edu.epu.quanlyhoso.dto.CreateCouncilRequest;
 import vn.edu.epu.quanlyhoso.dto.CreateEvaluationRequest;
-import vn.edu.epu.quanlyhoso.model.Council;
-import vn.edu.epu.quanlyhoso.model.CouncilAssignment;
-import vn.edu.epu.quanlyhoso.model.CouncilEvaluation;
-import vn.edu.epu.quanlyhoso.model.CouncilMember;
+import vn.edu.epu.quanlyhoso.entity.Council;
+import vn.edu.epu.quanlyhoso.entity.CouncilAssignment;
+import vn.edu.epu.quanlyhoso.entity.CouncilEvaluation;
+import vn.edu.epu.quanlyhoso.entity.CouncilMember;
 import vn.edu.epu.quanlyhoso.service.CouncilService;
 
 @RestController

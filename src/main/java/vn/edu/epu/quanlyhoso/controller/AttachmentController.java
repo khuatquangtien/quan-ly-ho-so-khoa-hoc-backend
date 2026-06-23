@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import vn.edu.epu.quanlyhoso.dto.AttachmentResponse;
-import vn.edu.epu.quanlyhoso.model.Attachment;
-import vn.edu.epu.quanlyhoso.model.AttachmentType;
+import vn.edu.epu.quanlyhoso.entity.Attachment;
+import vn.edu.epu.quanlyhoso.entity.AttachmentType;
 import vn.edu.epu.quanlyhoso.service.AttachmentService;
 
 @RestController
