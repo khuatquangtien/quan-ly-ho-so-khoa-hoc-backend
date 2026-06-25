@@ -1,7 +1,7 @@
 package vn.edu.epu.quanlyhoso.controller;
 
 import java.util.List;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +32,6 @@ public class CouncilController {
         this.councilService = councilService;
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")  // ← THÊM: Chỉ ADMIN
     @PostMapping
     public ResponseEntity<Council> createCouncil(@Valid @RequestBody CreateCouncilRequest request) {
         Council createdCouncil = councilService.createCouncil(request);
@@ -54,7 +53,6 @@ public class CouncilController {
         return ResponseEntity.ok(councilService.findMembersByCouncilId(id));
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")  // ← THÊM: Chỉ ADMIN
     @PostMapping("/{councilId}/assignments")
     public ResponseEntity<CouncilAssignment> assignTopic(
             @PathVariable Long councilId,
@@ -63,7 +61,6 @@ public class CouncilController {
         return ResponseEntity.status(HttpStatus.CREATED).body(assignment);
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'COUNCIL_MEMBER')")  // ← THÊM: ADMIN hoặc COUNCIL_MEMBER
     @PostMapping("/evaluations")
     public ResponseEntity<CouncilEvaluation> createEvaluation(@Valid @RequestBody CreateEvaluationRequest request) {
         CouncilEvaluation evaluation = councilService.createEvaluation(request);

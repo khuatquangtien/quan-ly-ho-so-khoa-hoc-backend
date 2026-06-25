@@ -30,7 +30,6 @@ public class AttachmentController {
         this.attachmentService = attachmentService;
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'LECTURER')")  // ← THÊM: ADMIN hoặc LECTURER
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<AttachmentResponse> uploadFile(
             @RequestParam("file") MultipartFile file,

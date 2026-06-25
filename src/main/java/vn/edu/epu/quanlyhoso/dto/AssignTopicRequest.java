@@ -1,6 +1,6 @@
 package vn.edu.epu.quanlyhoso.dto;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 public class AssignTopicRequest {
 
