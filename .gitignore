@@ -42,24 +42,19 @@ data/lucene/
 /nbdist/
 /.nb-gradle/
 
-<<<<<<< HEAD
 ### VS Code ###
 .vscode/
 
 # Compiled class file
-=======
-# Misc
->>>>>>> feature/project-management
 *.class
 *.ctxt
 .mtj.tmp/
 hs_err_pid*
 replay_pid*
-<<<<<<< HEAD
 # Bỏ qua các file chứa biến môi trường và mật khẩu
 .env
 .env.*
 application-local.properties
 application-secret.properties
-=======
->>>>>>> feature/project-management
+#xoá bỏ file ds_Store
+.DS_Store
