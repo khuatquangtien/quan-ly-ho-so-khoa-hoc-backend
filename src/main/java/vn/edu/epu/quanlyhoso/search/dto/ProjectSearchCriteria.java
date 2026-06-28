@@ -1,7 +1,8 @@
 package vn.edu.epu.quanlyhoso.search.dto;
 
 import java.math.BigDecimal;
-import vn.edu.epu.quanlyhoso.enums.ProjectStatus;
+
+import vn.edu.epu.quanlyhoso.project.enums.ProjectStatus;
 
 public class ProjectSearchCriteria {
 

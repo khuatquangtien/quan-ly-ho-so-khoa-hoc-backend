@@ -11,7 +11,8 @@ import org.apache.lucene.document.Field.Store;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import vn.edu.epu.quanlyhoso.entity.Project;
+
+import vn.edu.epu.quanlyhoso.project.entity.Project;
 
 @Component
 public class ProjectLuceneDocumentMapper {

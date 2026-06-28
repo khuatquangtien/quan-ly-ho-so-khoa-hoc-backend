@@ -1,7 +1,8 @@
 package vn.edu.epu.quanlyhoso.search;
 
 import java.util.List;
-import vn.edu.epu.quanlyhoso.entity.Project;
+
+import vn.edu.epu.quanlyhoso.project.entity.Project;
 import vn.edu.epu.quanlyhoso.search.dto.ProjectSearchCriteria;
 import vn.edu.epu.quanlyhoso.search.dto.ProjectSearchIndexRebuildResponse;
 

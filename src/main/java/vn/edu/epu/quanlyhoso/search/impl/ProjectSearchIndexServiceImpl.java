@@ -29,8 +29,9 @@ import org.apache.lucene.store.FSDirectory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import vn.edu.epu.quanlyhoso.entity.Project;
-import vn.edu.epu.quanlyhoso.repository.ProjectRepository;
+
+import vn.edu.epu.quanlyhoso.project.entity.Project;
+import vn.edu.epu.quanlyhoso.project.repository.ProjectRepository;
 import vn.edu.epu.quanlyhoso.search.ProjectSearchIndexService;
 import vn.edu.epu.quanlyhoso.search.dto.ProjectSearchCriteria;
 import vn.edu.epu.quanlyhoso.search.dto.ProjectSearchIndexRebuildResponse;
