@@ -1,10 +1,10 @@
 package vn.edu.epu.quanlyhoso.common.exception;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
+import vn.edu.epu.quanlyhoso.common.dto.response.ApiMessageResponse;
 import vn.edu.epu.quanlyhoso.common.dto.response.ErrorResponse;
 import vn.edu.epu.quanlyhoso.project.exception.DuplicateSubmissionException;
 import vn.edu.epu.quanlyhoso.project.exception.InvalidBudgetException;
@@ -21,6 +25,7 @@ import vn.edu.epu.quanlyhoso.project.exception.InvalidProjectStatusException;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    // --- CÁC EXCEPTION KHÔNG TÌM THẤY TÀI NGUYÊN (NOT FOUND) ---
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleResourceNotFound(
             ResourceNotFoundException exception,
@@ -28,6 +33,14 @@ public class GlobalExceptionHandler {
         return buildResponse(HttpStatus.NOT_FOUND, exception.getMessage(), request.getRequestURI(), null);
     }
 
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleEntityNotFound(
+            EntityNotFoundException exception,
+            HttpServletRequest request) {
+        return buildResponse(HttpStatus.NOT_FOUND, exception.getMessage(), request.getRequestURI(), null);
+    }
+
+    // --- CÁC EXCEPTION LOGIC NGHIỆP VỤ (BAD REQUEST) ---
     @ExceptionHandler({
             InvalidProjectStatusException.class,
             DuplicateSubmissionException.class,
@@ -40,6 +53,21 @@ public class GlobalExceptionHandler {
         return buildResponse(HttpStatus.BAD_REQUEST, exception.getMessage(), request.getRequestURI(), null);
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalArgument(
+            IllegalArgumentException exception,
+            HttpServletRequest request) {
+        return buildResponse(HttpStatus.BAD_REQUEST, exception.getMessage(), request.getRequestURI(), null);
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalState(
+            IllegalStateException exception,
+            HttpServletRequest request) {
+        return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage(), request.getRequestURI(), null);
+    }
+
+    // --- CÁC EXCEPTION ĐỒNG BỘ VALIDATION DỮ LIỆU ĐẦU VÀO ---
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleMethodArgumentNotValid(
             MethodArgumentNotValidException exception,
@@ -80,6 +108,7 @@ public class GlobalExceptionHandler {
                 null);
     }
 
+    // --- EXCEPTION LỖI HỆ THỐNG GỐC (INTERNAL SERVER ERROR) ---
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleException(
             Exception exception,
@@ -91,6 +120,7 @@ public class GlobalExceptionHandler {
                 null);
     }
 
+    // --- HÀM DÙNG CHUNG ĐỂ ĐÓNG GÓI ĐỐI TƯỢNG LỖI ---
     private ResponseEntity<ErrorResponse> buildResponse(
             HttpStatus status,
             String message,
