@@ -11,5 +11,4 @@ public class QuanLyHoSoBackendApplication {
 		SpringApplication.run(QuanLyHoSoBackendApplication.class, args);
 		System.out.println("Da chay THANH CONG");
 	}
-
 }

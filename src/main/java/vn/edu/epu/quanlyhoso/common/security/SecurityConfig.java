@@ -1,6 +1,8 @@
 package vn.edu.epu.quanlyhoso.common.security;
 
 import lombok.RequiredArgsConstructor;
+import vn.edu.epu.quanlyhoso.config.HeaderAuthenticationFilter;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -36,8 +38,8 @@ public class SecurityConfig {
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Không lưu phiên (Session) trên Server
             .authenticationProvider(authenticationProvider)
             .headers(headers -> headers.frameOptions(frame -> frame.disable()))
-            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class); // Xếp ông bảo vệ JWT lên đầu hàng
-
+            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);// Xếp ông bảo vệ JWT lên đầu hàng;
+        	
         return http.build();
     }
 }
