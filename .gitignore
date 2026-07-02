@@ -1,11 +1,32 @@
-<<<<<<< HEAD
 HELP.md
+
+# Build output
 target/
-.mvn/wrapper/maven-wrapper.jar
+build/
 !**/src/main/**/target/
 !**/src/test/**/target/
+!**/src/main/**/build/
+!**/src/test/**/build/
 
-### STS ###
+# Maven wrapper binary
+.mvn/wrapper/maven-wrapper.jar
+
+# Runtime/generated files
+.metadata/
+data/lucene/
+*.log
+.DS_Store
+
+# Package artifacts
+*.jar
+*.war
+*.zip
+*.tar.gz
+*.rar
+
+# IDE files
+.idea/
+.vscode/
 .apt_generated
 .classpath
 .factorypath
@@ -14,47 +35,32 @@ target/
 .springBeans
 .sts4-cache
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-
-### NetBeans ###
+# NetBeans
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
 ### VS Code ###
 .vscode/
-=======
+<<<<<<< HEAD
+
 # Compiled class file
 *.class
-
-# Log file
-*.log
-
-# BlueJ files
 *.ctxt
-
-# Mobile Tools for Java (J2ME)
 .mtj.tmp/
-
-# Package Files #
-*.jar
-*.war
-*.nar
-*.ear
-*.zip
-*.tar.gz
-*.rar
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
->>>>>>> 7907610cb0801be9b05dc14f2e3f22973ea86949
+# Bỏ qua các file chứa biến môi trường và mật khẩu
+.env
+.env.*
+application-local.properties
+application-secret.properties
+#xoá bỏ file ds_Store
+.DS_Store
+=======
+# bỏ qua file .ds_store 
+.DS_Store
+**/.DS_Store
+>>>>>>> quanlyhoidongvaminhchung
