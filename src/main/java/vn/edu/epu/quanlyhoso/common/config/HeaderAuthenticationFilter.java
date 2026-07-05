@@ -1,4 +1,4 @@
-package vn.edu.epu.quanlyhoso.config;
+package vn.edu.epu.quanlyhoso.common.config;
 
 import java.io.IOException;
 import java.util.Collections;
