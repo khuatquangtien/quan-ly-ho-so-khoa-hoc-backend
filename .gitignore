@@ -58,3 +58,4 @@ build/
 hs_err_pid*
 replay_pid*
 >>>>>>> 7907610cb0801be9b05dc14f2e3f22973ea86949
+.DS_Store
