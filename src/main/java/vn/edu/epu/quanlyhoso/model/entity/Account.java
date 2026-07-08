@@ -44,5 +44,8 @@ public class Account implements UserDetails {
     @Override
     public boolean isCredentialsNonExpired() { return true; }
     @Override
-    public boolean isEnabled() { return true; }
+    public boolean isEnabled() { 
+        // Lấy chính cái trạng thái trong Database ra để cho Spring Security kiểm tra
+        return this.isActive != null ? this.isActive : false; 
+    }
 }
