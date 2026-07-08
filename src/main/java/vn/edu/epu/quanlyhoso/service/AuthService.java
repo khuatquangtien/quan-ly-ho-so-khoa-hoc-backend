@@ -20,9 +20,7 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-    // ==========================================
-    // PHẦN 1: CÁC BIẾN KHAI BÁO (THÊM MỚI BÊN DƯỚI)
-    // ==========================================
+    // PHẦN 1: CÁC BIẾN KHAI BÁO 
     private final AccountRepository repository;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
@@ -31,11 +29,9 @@ public class AuthService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
-    // ==========================================
-    // PHẦN 2: HÀM LOGIN (GIỮ NGUYÊN 100% THEO LỆNH SẾP)
-    // ==========================================
+    // PHẦN 2: HÀM LOGIN 
     public AuthResponse authenticate(AuthRequest request) {
-        // 1. Quăng vào máy xác thực. Sai mật khẩu là nó văng Exception vỡ mặt ngay chỗ này
+        // 1. Quăng vào máy xác thực. Sai mật khẩu là nó văng Exception ngay chỗ này
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getUsername(),
@@ -59,7 +55,7 @@ public class AuthService {
     }
 
     
-    // PHẦN 3: HÀM REGISTER (MỚI ĐƯỢC ĐẮP VÀO)
+    // PHẦN 3: HÀM REGISTER 
     public AuthResponse register(RegisterRequest request) {
         // 1. Check xem Username đã bị thằng nào lấy mất chưa
         if (repository.findByUsername(request.getUsername()).isPresent()) {

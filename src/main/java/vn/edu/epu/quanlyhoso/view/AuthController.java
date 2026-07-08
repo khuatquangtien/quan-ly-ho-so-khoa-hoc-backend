@@ -24,7 +24,7 @@ public class AuthController {
     }
     
     @PostMapping("/register")
-    // CỰC KỲ QUAN TRỌNG: Thêm @Valid vào đây để chặn cổng ngay từ đầu!
+    // Thêm @Valid vào đây để chặn cổng ngay từ đầu!
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request) {
         try {
             return ResponseEntity.ok(authService.register(request));
