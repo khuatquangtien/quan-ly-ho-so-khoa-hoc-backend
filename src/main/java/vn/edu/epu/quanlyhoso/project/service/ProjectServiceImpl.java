@@ -11,9 +11,12 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import vn.edu.epu.quanlyhoso.auth.entity.Account;
+import vn.edu.epu.quanlyhoso.auth.repository.AccountRepository;
 import vn.edu.epu.quanlyhoso.common.exception.BusinessException;
 import vn.edu.epu.quanlyhoso.common.exception.ResourceNotFoundException;
 import vn.edu.epu.quanlyhoso.lecture.entity.Lecturer;
@@ -43,6 +46,7 @@ public class ProjectServiceImpl implements ProjectService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProjectServiceImpl.class);
 
     private final ProjectRepository projectRepository;
+    private final AccountRepository accountRepository;
     private final LecturerRepository lecturerRepository;
     private final ProjectMemberRepository projectMemberRepository;
     private final ProjectMapper projectMapper;
@@ -51,12 +55,14 @@ public class ProjectServiceImpl implements ProjectService {
 
     public ProjectServiceImpl(
             ProjectRepository projectRepository,
+            AccountRepository accountRepository,
             LecturerRepository lecturerRepository,
             ProjectMemberRepository projectMemberRepository,
             ProjectMapper projectMapper,
             BudgetMapper budgetMapper,
             ProjectSearchIndexService projectSearchIndexService) {
         this.projectRepository = projectRepository;
+        this.accountRepository = accountRepository;
         this.lecturerRepository = lecturerRepository;
         this.projectMemberRepository = projectMemberRepository;
         this.projectMapper = projectMapper;
@@ -67,8 +73,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional
     public ProjectDetailResponse createProject(CreateProjectRequest request) {
-        // TODO: Replace leaderId from request with authenticated lecturer from SecurityContext after JWT module is integrated.
-        Lecturer leader = findLecturerById(request.getLeaderId());
+        Lecturer leader = findCurrentLecturer();
         validateEstimatedBudget(request.getEstimatedBudget());
 
         Project project = new Project();
@@ -360,6 +365,15 @@ public class ProjectServiceImpl implements ProjectService {
     private Lecturer findLecturerById(Integer lecturerId) {
         return lecturerRepository.findById(lecturerId)
                 .orElseThrow(() -> new ResourceNotFoundException("Lecturer not found with id: " + lecturerId));
+    }
+
+    private Lecturer findCurrentLecturer() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Account currentAccount = accountRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("Current account not found"));
+        return lecturerRepository.findByAccountId(currentAccount.getId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Lecturer profile not found for current account"));
     }
 
     private Project findProjectById(Integer projectId) {

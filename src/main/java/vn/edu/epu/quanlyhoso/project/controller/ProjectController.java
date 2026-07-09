@@ -40,7 +40,6 @@ public class ProjectController {
 
     @PostMapping
     public ResponseEntity<ProjectDetailResponse> createProject(@Valid @RequestBody CreateProjectRequest request) {
-        // TODO: Replace leaderId from request with authenticated lecturer after JWT module is integrated.
         return ResponseEntity.status(HttpStatus.CREATED).body(projectService.createProject(request));
     }
 
@@ -54,7 +53,6 @@ public class ProjectController {
     public ResponseEntity<ProjectReportResponse> submitReport(
             @PathVariable Integer projectId,
             @Valid @RequestBody SubmitProjectReportRequest request) {
-        // TODO: Verify lecturer can submit reports for this project after Security module is merged.
         return ResponseEntity.status(HttpStatus.CREATED).body(projectReportService.submitReport(projectId, request));
     }
 
@@ -68,7 +66,6 @@ public class ProjectController {
     public ResponseEntity<ProjectSubmissionResponse> submitFinalSubmission(
             @PathVariable Integer projectId,
             @Valid @RequestBody SubmitProjectSubmissionRequest request) {
-        // TODO: Verify lecturer can submit final acceptance for this project after Security module is merged.
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(projectSubmissionService.submitFinalSubmission(projectId, request));
     }

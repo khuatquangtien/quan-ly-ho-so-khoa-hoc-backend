@@ -34,7 +34,7 @@ public class AdminController {
         }
     }
     
-    //xoa tài khoản vai trò admin
+    //xoa tài khoản ( admin)
     
     @DeleteMapping("/{id}")
     public void DeleteAccount(@PathVariable Integer id) {

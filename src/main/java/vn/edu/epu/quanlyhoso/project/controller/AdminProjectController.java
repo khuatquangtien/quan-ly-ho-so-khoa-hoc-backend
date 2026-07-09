@@ -65,7 +65,6 @@ public class AdminProjectController {
 
     @GetMapping("/{projectId}")
     public ResponseEntity<ProjectDetailResponse> getProjectById(@PathVariable Integer projectId) {
-        // TODO: Restrict this operation to ROLE_ADMIN after Security module is merged.
         return ResponseEntity.ok(projectService.getProjectById(projectId));
     }
 
@@ -73,13 +72,11 @@ public class AdminProjectController {
     public ResponseEntity<ProjectDetailResponse> updateProjectStatus(
             @PathVariable Integer projectId,
             @Valid @RequestBody UpdateProjectStatusRequest request) {
-        // TODO: Restrict this operation to ROLE_ADMIN after Security module is merged.
         return ResponseEntity.ok(projectService.updateProjectStatus(projectId, request));
     }
 
     @GetMapping("/{projectId}/budget")
     public ResponseEntity<BudgetResponse> getProjectBudget(@PathVariable Integer projectId) {
-        // TODO: Restrict this operation to ROLE_ADMIN after Security module is merged.
         return ResponseEntity.ok(projectService.getProjectBudget(projectId));
     }
 
@@ -87,7 +84,7 @@ public class AdminProjectController {
     public ResponseEntity<BudgetResponse> updateApprovedBudget(
             @PathVariable Integer projectId,
             @Valid @RequestBody UpdateProjectBudgetRequest request) {
-        // TODO: Restrict this operation to ROLE_ADMIN after Security module is merged.
         return ResponseEntity.ok(projectService.updateApprovedBudget(projectId, request));
     }
 }
+
