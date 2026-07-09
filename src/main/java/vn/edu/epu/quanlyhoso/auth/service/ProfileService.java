@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import vn.edu.epu.quanlyhoso.auth.dto.request.ProfileRequest;
 import vn.edu.epu.quanlyhoso.auth.entity.Account;
 import vn.edu.epu.quanlyhoso.auth.repository.AccountRepository;
-import vn.edu.epu.quanlyhoso.lecturer.entity.Lecturer;
-import vn.edu.epu.quanlyhoso.lecturer.repository.LecturerRepository;
+import vn.edu.epu.quanlyhoso.lecture.entity.Lecturer;
+import vn.edu.epu.quanlyhoso.lecture.repository.LecturerRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -16,7 +16,7 @@ public class ProfileService {
     private final LecturerRepository lecturerRepository;
     private final AccountRepository accountRepository;
 
-    private Account getCurrentAccount() {
+    public Account getCurrentAccount() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return accountRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Lỗi: Không tìm thấy người dùng hiện tại!"));

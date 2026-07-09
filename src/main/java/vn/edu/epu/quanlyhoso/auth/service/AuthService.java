@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import vn.edu.epu.quanlyhoso.auth.dto.request.AuthRequest;
 import vn.edu.epu.quanlyhoso.auth.dto.request.RegisterRequest;
-import vn.edu.epu.quanlyhoso.auth.dto.respone.AuthResponse;
+import vn.edu.epu.quanlyhoso.auth.dto.response.AuthResponse;
 import vn.edu.epu.quanlyhoso.auth.entity.Account;
 import vn.edu.epu.quanlyhoso.auth.entity.Role;
 import vn.edu.epu.quanlyhoso.auth.repository.AccountRepository;

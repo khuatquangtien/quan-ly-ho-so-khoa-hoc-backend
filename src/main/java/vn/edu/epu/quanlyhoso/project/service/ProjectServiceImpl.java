@@ -16,8 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import vn.edu.epu.quanlyhoso.common.exception.BusinessException;
 import vn.edu.epu.quanlyhoso.common.exception.ResourceNotFoundException;
-import vn.edu.epu.quanlyhoso.lecturer.entity.Lecturer;
-import vn.edu.epu.quanlyhoso.lecturer.repository.LecturerRepository;
+import vn.edu.epu.quanlyhoso.lecture.entity.Lecturer;
+import vn.edu.epu.quanlyhoso.lecture.repository.LecturerRepository;
 import vn.edu.epu.quanlyhoso.project.dto.request.CreateProjectRequest;
 import vn.edu.epu.quanlyhoso.project.dto.request.UpdateProjectBudgetRequest;
 import vn.edu.epu.quanlyhoso.project.dto.request.UpdateProjectStatusRequest;

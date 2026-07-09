@@ -1,4 +1,4 @@
-package vn.edu.epu.quanlyhoso.lecturer.entity;
+package vn.edu.epu.quanlyhoso.lecture.entity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

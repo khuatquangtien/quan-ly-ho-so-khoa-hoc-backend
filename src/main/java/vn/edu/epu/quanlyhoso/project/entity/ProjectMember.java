@@ -7,7 +7,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
-import vn.edu.epu.quanlyhoso.lecturer.entity.Lecturer;
+import vn.edu.epu.quanlyhoso.lecture.entity.Lecturer;
 
 @Entity
 @Table(name = "project_members")

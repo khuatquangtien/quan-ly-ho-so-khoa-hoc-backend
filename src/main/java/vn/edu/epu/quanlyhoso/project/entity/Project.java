@@ -18,7 +18,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import vn.edu.epu.quanlyhoso.lecturer.entity.Lecturer;
+import vn.edu.epu.quanlyhoso.lecture.entity.Lecturer;
 import vn.edu.epu.quanlyhoso.project.enums.ProjectStatus;
 
 @Entity
