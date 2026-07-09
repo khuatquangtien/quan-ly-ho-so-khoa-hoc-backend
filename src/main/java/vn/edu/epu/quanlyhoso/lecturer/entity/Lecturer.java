@@ -54,13 +54,4 @@ public class Lecturer {
     @Column(name = "updated_at", insertable = false, updatable = false)
     private LocalDateTime updatedAt;
 
-    // ==========================================
-    // CÁC MỐI QUAN HỆ QUẢN LÝ ĐỀ TÀI (Bắt buộc giữ từ nhánh feature/project-management)
-    // ==========================================
-    @OneToMany(mappedBy = "leader")
-    private List<Project> ledProjects = new ArrayList<>();
-
-    @OneToMany(mappedBy = "lecturer")
-    private List<ProjectMember> projectMemberships = new ArrayList<>();
-
 }
