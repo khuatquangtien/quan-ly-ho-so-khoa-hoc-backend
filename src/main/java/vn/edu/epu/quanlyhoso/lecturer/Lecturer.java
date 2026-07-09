@@ -1,7 +1,8 @@
-package vn.edu.epu.quanlyhoso.model.entity;
+package vn.edu.epu.quanlyhoso.lecturer;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import vn.edu.epu.quanlyhoso.auth.Account;
 
 @Data
 @Entity

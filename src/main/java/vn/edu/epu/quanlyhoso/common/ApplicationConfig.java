@@ -1,4 +1,4 @@
-package vn.edu.epu.quanlyhoso.security;
+package vn.edu.epu.quanlyhoso.common;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import vn.edu.epu.quanlyhoso.dao.AccountRepository;
+import vn.edu.epu.quanlyhoso.auth.AccountRepository;
 
 @Configuration
 @RequiredArgsConstructor

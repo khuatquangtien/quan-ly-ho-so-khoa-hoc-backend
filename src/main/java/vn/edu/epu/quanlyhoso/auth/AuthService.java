@@ -1,18 +1,10 @@
-package vn.edu.epu.quanlyhoso.service;
+package vn.edu.epu.quanlyhoso.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder; // MỚI THÊM
 import org.springframework.stereotype.Service;
-import vn.edu.epu.quanlyhoso.model.dto.AuthRequest;
-import vn.edu.epu.quanlyhoso.model.dto.AuthResponse;
-import vn.edu.epu.quanlyhoso.model.dto.RegisterRequest; // MỚI THÊM
-import vn.edu.epu.quanlyhoso.model.entity.Account; // MỚI THÊM
-import vn.edu.epu.quanlyhoso.model.entity.Role; // MỚI THÊM
-import vn.edu.epu.quanlyhoso.dao.AccountRepository;
-import vn.edu.epu.quanlyhoso.dao.RoleRepository; // MỚI THÊM
-import vn.edu.epu.quanlyhoso.security.JwtService;
 
 import java.util.HashMap;
 import java.util.Map;

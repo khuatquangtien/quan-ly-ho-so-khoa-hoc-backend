@@ -1,11 +1,11 @@
-package vn.edu.epu.quanlyhoso.service;
+package vn.edu.epu.quanlyhoso.admin;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import vn.edu.epu.quanlyhoso.dao.AccountRepository;
-import vn.edu.epu.quanlyhoso.dao.RoleRepository;
-import vn.edu.epu.quanlyhoso.model.entity.Account;
-import vn.edu.epu.quanlyhoso.model.entity.Role;
+import vn.edu.epu.quanlyhoso.auth.AccountRepository;
+import vn.edu.epu.quanlyhoso.auth.RoleRepository;
+import vn.edu.epu.quanlyhoso.auth.Account;
+import vn.edu.epu.quanlyhoso.auth.Role;
 
 @Service
 @RequiredArgsConstructor

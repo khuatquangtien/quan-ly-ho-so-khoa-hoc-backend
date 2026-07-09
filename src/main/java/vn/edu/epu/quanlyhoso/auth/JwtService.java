@@ -1,4 +1,4 @@
-package vn.edu.epu.quanlyhoso.security;
+package vn.edu.epu.quanlyhoso.auth;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

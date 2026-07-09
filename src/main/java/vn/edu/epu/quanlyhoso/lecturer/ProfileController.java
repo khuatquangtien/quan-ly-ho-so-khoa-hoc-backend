@@ -1,10 +1,9 @@
-package vn.edu.epu.quanlyhoso.view;
+package vn.edu.epu.quanlyhoso.lecturer;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import vn.edu.epu.quanlyhoso.model.dto.ProfileRequest;
-import vn.edu.epu.quanlyhoso.service.ProfileService;
+
 
 @RestController
 @RequestMapping("/api/profile")

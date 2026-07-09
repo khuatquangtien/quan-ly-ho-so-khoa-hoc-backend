@@ -1,4 +1,4 @@
-package vn.edu.epu.quanlyhoso.security;
+package vn.edu.epu.quanlyhoso.auth;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
