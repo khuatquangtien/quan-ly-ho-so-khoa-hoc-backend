@@ -1,4 +1,4 @@
-package vn.edu.epu.quanlyhoso.auth;
+package vn.edu.epu.quanlyhoso.auth.controller;
 
 import jakarta.validation.Valid; // Nhớ import thư viện này
 import lombok.RequiredArgsConstructor;
@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import vn.edu.epu.quanlyhoso.auth.service.AuthService;
+import vn.edu.epu.quanlyhoso.auth.dto.*;
+
+
 
 @RestController
 @RequestMapping("/api/auth")

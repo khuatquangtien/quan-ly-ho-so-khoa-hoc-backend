@@ -1,4 +1,4 @@
-package vn.edu.epu.quanlyhoso.auth;
+package vn.edu.epu.quanlyhoso.auth.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

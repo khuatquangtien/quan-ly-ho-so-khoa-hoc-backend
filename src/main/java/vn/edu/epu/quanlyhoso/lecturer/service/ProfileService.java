@@ -1,10 +1,16 @@
-package vn.edu.epu.quanlyhoso.lecturer;
+package vn.edu.epu.quanlyhoso.lecturer.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import vn.edu.epu.quanlyhoso.auth.AccountRepository;
-import vn.edu.epu.quanlyhoso.auth.Account;
+import vn.edu.epu.quanlyhoso.auth.repository.*;
+import vn.edu.epu.quanlyhoso.auth.entity.Account;
+import vn.edu.epu.quanlyhoso.lecturer.repository.*;
+import vn.edu.epu.quanlyhoso.lecturer.entity.*;
+import vn.edu.epu.quanlyhoso.lecturer.dto.*;
+
+
+
 
 @Service
 @RequiredArgsConstructor

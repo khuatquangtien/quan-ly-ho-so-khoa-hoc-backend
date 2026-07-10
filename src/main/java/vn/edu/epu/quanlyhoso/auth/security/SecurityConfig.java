@@ -1,4 +1,4 @@
-package vn.edu.epu.quanlyhoso.auth;
+package vn.edu.epu.quanlyhoso.auth.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

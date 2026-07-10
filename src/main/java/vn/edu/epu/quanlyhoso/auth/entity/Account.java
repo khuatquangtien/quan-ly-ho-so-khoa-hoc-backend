@@ -1,4 +1,4 @@
-package vn.edu.epu.quanlyhoso.auth;
+package vn.edu.epu.quanlyhoso.auth.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package vn.edu.epu.quanlyhoso.auth;
+package vn.edu.epu.quanlyhoso.auth.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -8,6 +8,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+import vn.edu.epu.quanlyhoso.auth.repository.*;
+import vn.edu.epu.quanlyhoso.auth.security.*;
+import vn.edu.epu.quanlyhoso.auth.dto.*;
+import vn.edu.epu.quanlyhoso.auth.entity.*;
+
+
+
+
 
 @Service
 @RequiredArgsConstructor

@@ -1,8 +1,12 @@
-package vn.edu.epu.quanlyhoso.lecturer;
+package vn.edu.epu.quanlyhoso.lecturer.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vn.edu.epu.quanlyhoso.lecturer.service.*;
+import vn.edu.epu.quanlyhoso.lecturer.dto.*;
+
+
 
 
 @RestController

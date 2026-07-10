@@ -1,9 +1,11 @@
-package vn.edu.epu.quanlyhoso.admin;
+package vn.edu.epu.quanlyhoso.admin.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import vn.edu.epu.quanlyhoso.auth.UpdateRoleRequest;
+import vn.edu.epu.quanlyhoso.auth.dto.UpdateRoleRequest;
+import vn.edu.epu.quanlyhoso.admin.service.AdminService;
+
 
 @RestController
 @RequestMapping("/api/admin")
