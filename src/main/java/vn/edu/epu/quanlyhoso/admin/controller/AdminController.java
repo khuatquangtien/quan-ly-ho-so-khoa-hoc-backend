@@ -1,16 +1,22 @@
 package vn.edu.epu.quanlyhoso.admin.controller;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import vn.edu.epu.quanlyhoso.auth.dto.UpdateRoleRequest;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import lombok.RequiredArgsConstructor;
 import vn.edu.epu.quanlyhoso.admin.service.AdminService;
+import vn.edu.epu.quanlyhoso.auth.dto.request.UpdateRoleRequest;
 
 
 @RestController
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor
 public class AdminController {
+
+    
     private final AdminService adminService;
 
     @PutMapping("/assign-role")
@@ -22,4 +28,30 @@ public class AdminController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+//
+//    
+//    //xoa tài khoản ( admin)
+//    
+//    @DeleteMapping("/{id}")
+//    public void DeleteAccount(@PathVariable Integer id) {
+//    	adminService.deleteById(id);
+//    }
+//    // lấy tài khoản tất cả người dùng
+//    @GetMapping("/users")
+//    public List<AccountResponse> GetAllAccount(){
+//    	return adminService.GetAllAccount();
+//    }
+//    
+//    // sửa tất cả 
+//    @PutMapping("/user/{id}")
+//    public ResponseEntity<?> updateAccount(@PathVariable Integer id, @RequestBody UpdateAccountRequest request  ){
+//    	try {
+//			adminService.updateAccount(id, request);
+//			return ResponseEntity.ok("Đã cập nhật tài khoản");
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//			return ResponseEntity.badRequest().body(e.getMessage());
+//		}
+//    }
+//    
 }

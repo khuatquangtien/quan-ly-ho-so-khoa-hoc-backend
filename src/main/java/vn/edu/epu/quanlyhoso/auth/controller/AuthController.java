@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vn.edu.epu.quanlyhoso.auth.service.AuthService;
 import vn.edu.epu.quanlyhoso.auth.dto.*;
+import vn.edu.epu.quanlyhoso.auth.dto.request.AuthRequest;
+import vn.edu.epu.quanlyhoso.auth.dto.request.RegisterRequest;
 
 
 
