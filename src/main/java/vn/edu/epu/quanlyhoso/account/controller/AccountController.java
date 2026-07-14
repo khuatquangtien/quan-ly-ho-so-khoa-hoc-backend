@@ -8,32 +8,36 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import vn.edu.epu.quanlyhoso.account.service.AccountService;
 import vn.edu.epu.quanlyhoso.admin.dto.request.UpdateAccountRequest;
-import vn.edu.epu.quanlyhoso.admin.service.AdminService;
 import vn.edu.epu.quanlyhoso.auth.dto.response.AccountResponse;
 
 @RestController
+@RequestMapping("/accounts")
 public class AccountController {
-//xoa tài khoản ( admin)
-    private  AdminService adminService;
+    private  AccountService accountService;
     
+    
+  //xoa tài khoản ( admin)
+
     @DeleteMapping("/{id}")
     public void DeleteAccount(@PathVariable Integer id) {
-    	adminService.deleteById(id);
+    	accountService.deleteById(id);
     }
     // lấy tài khoản tất cả người dùng
     @GetMapping("/users")
     public List<AccountResponse> GetAllAccount(){
-    	return adminService.GetAllAccount();
+    	return accountService.GetAllAccount();
     }
     
     // sửa tất cả 
     @PutMapping("/user/{id}")
     public ResponseEntity<?> updateAccount(@PathVariable Integer id, @RequestBody UpdateAccountRequest request  ){
     	try {
-			adminService.updateAccount(id, request);
+			accountService.updateAccount(id, request);
 			return ResponseEntity.ok("Đã cập nhật tài khoản");
 		} catch (Exception e) {
 			// TODO: handle exception

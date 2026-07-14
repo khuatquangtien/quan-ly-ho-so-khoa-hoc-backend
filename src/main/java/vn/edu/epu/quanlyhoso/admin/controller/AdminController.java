@@ -34,28 +34,6 @@ public class AdminController {
         }
     }
     
-    //xoa tài khoản ( admin)
     
-    @DeleteMapping("/{id}")
-    public void DeleteAccount(@PathVariable Integer id) {
-    	adminService.deleteById(id);
-    }
-    // lấy tài khoản tất cả người dùng
-    @GetMapping("/users")
-    public List<AccountResponse> GetAllAccount(){
-    	return adminService.GetAllAccount();
-    }
-    
-    // sửa tất cả 
-    @PutMapping("/user/{id}")
-    public ResponseEntity<?> updateAccount(@PathVariable Integer id, @RequestBody UpdateAccountRequest request  ){
-    	try {
-			adminService.updateAccount(id, request);
-			return ResponseEntity.ok("Đã cập nhật tài khoản");
-		} catch (Exception e) {
-			// TODO: handle exception
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
-    }
     
 }
