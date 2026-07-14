@@ -1,5 +1,8 @@
 package vn.edu.epu.quanlyhoso.common.security;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -9,6 +12,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,6 +29,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+        	.cors(cors -> cors.configurationSource(corsConfigurationSource())) 
+
             .csrf(csrf -> csrf.disable()) // Tắt bảo vệ CSRF vì xài JWT Token
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
@@ -32,6 +40,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/test/admin").hasAuthority("ADMIN")
                 // Chỉ có admin mới là người thay đổi được quyền
                 .requestMatchers("/api/admin/**").hasAuthority("ADMIN") 
+                .requestMatchers("/api/profile/me").permitAll() // T
                 // Dành cho bất cứ ai đã đăng nhập (Có Token)
                 .requestMatchers("/api/test/user").authenticated()
                 .anyRequest().authenticated() // TẤT CẢ các API còn lại bắt buộc phải có Token hợp lệ mới cho vào
@@ -42,5 +51,26 @@ public class SecurityConfig {
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);// Xếp ông bảo vệ JWT lên đầu hàng;
 
         return http.build();
+    }
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        
+        // Cho phép TẤT CẢ các nguồn (Origin) truy cập
+        configuration.setAllowedOriginPatterns(Collections.singletonList("http://localhost:5173")); 
+        
+        // Cho phép tất cả các phương thức HTTP (GET, POST, PUT, DELETE, v.v.)
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); 
+        
+        // Cho phép gửi kèm tất cả các loại Header (bao gồm cả header "Authorization" chứa JWT)
+        configuration.setAllowedHeaders(Collections.singletonList("*")); 
+        
+        // Cho phép trình duyệt gửi Cookie hoặc thông tin xác thực kèm theo (rất cần cho JWT/Session)
+        configuration.setAllowCredentials(true); 
+        
+        // Áp dụng cấu hình này cho TOÀN BỘ các API trong hệ thống
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }
