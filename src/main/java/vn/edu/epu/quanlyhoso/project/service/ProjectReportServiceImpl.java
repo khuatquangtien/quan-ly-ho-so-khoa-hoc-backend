@@ -1,5 +1,7 @@
 package vn.edu.epu.quanlyhoso.project.service;
 
+
+
 import java.util.List;
 
 import org.springframework.security.access.AccessDeniedException;
@@ -9,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import vn.edu.epu.quanlyhoso.auth.entity.Account;
 import vn.edu.epu.quanlyhoso.common.exception.ResourceNotFoundException;
 import vn.edu.epu.quanlyhoso.common.security.CurrentUserService;
-import vn.edu.epu.quanlyhoso.lecture.entity.Lecturer;
-import vn.edu.epu.quanlyhoso.lecture.repository.LecturerRepository;
+import vn.edu.epu.quanlyhoso.lecturer.entity.Lecturer;
+import vn.edu.epu.quanlyhoso.lecturer.repository.LecturerRepository;
 import vn.edu.epu.quanlyhoso.project.dto.request.SubmitProjectReportRequest;
 import vn.edu.epu.quanlyhoso.project.dto.response.ProjectReportResponse;
 import vn.edu.epu.quanlyhoso.project.entity.Project;

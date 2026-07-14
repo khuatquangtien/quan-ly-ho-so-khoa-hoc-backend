@@ -17,6 +17,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import lombok.RequiredArgsConstructor;
+import vn.edu.epu.quanlyhoso.auth.security.JwtAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -43,6 +44,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/profile/me").permitAll() // T
                 // Dành cho bất cứ ai đã đăng nhập (Có Token)
                 .requestMatchers("/api/test/user").authenticated()
+                .requestMatchers("/api/accounts/**").hasAnyAuthority("ADMIN")
                 .anyRequest().authenticated() // TẤT CẢ các API còn lại bắt buộc phải có Token hợp lệ mới cho vào
             )
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Không lưu phiên (Session) trên Server
@@ -57,7 +59,7 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         
         // Cho phép TẤT CẢ các nguồn (Origin) truy cập
-        configuration.setAllowedOriginPatterns(Collections.singletonList("http://localhost:5173")); 
+        configuration.setAllowedOriginPatterns(Collections.singletonList("http://localhost:[*]")); 
         
         // Cho phép tất cả các phương thức HTTP (GET, POST, PUT, DELETE, v.v.)
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); 

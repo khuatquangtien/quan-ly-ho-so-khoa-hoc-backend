@@ -1,5 +1,6 @@
 package vn.edu.epu.quanlyhoso.common.test;
 
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,6 @@ public class TestController {
     // Cái này tý nữa cấu hình chỉ ADMIN mới được vào
     @GetMapping("/admin")
     public ResponseEntity<String> sayHelloAdmin() {
-        return ResponseEntity.ok("Chào sếp ADMIN! Mời sếp xơi nước!");
+        return ResponseEntity.ok("Chào ADMIN!");
     }
 }

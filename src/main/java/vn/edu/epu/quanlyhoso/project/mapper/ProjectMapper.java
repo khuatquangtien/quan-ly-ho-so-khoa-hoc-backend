@@ -1,9 +1,10 @@
 package vn.edu.epu.quanlyhoso.project.mapper;
 
 import java.util.List;
+
 import org.springframework.stereotype.Component;
 
-import vn.edu.epu.quanlyhoso.lecture.entity.Lecturer;
+import vn.edu.epu.quanlyhoso.lecturer.entity.Lecturer;
 import vn.edu.epu.quanlyhoso.project.dto.response.ProjectDetailResponse;
 import vn.edu.epu.quanlyhoso.project.dto.response.ProjectMemberResponse;
 import vn.edu.epu.quanlyhoso.project.dto.response.ProjectResponse;

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.RequiredArgsConstructor;
 import vn.edu.epu.quanlyhoso.admin.dto.request.UpdateAccountRequest;
 import vn.edu.epu.quanlyhoso.auth.dto.response.AccountResponse;
 import vn.edu.epu.quanlyhoso.auth.entity.Account;
@@ -14,10 +15,11 @@ import vn.edu.epu.quanlyhoso.auth.repository.AccountRepository;
 import vn.edu.epu.quanlyhoso.auth.repository.RoleRepository;
 
 @Service
+@RequiredArgsConstructor
 public class AccountService {
 	
-	private AccountRepository accountRepository;
-	private RoleRepository roleRepository;
+	private final AccountRepository accountRepository;
+	private final RoleRepository roleRepository;
 	
     @Transactional
     public void deleteById(Integer id) {

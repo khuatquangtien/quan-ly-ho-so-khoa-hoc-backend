@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,8 +20,8 @@ import vn.edu.epu.quanlyhoso.auth.entity.Account;
 import vn.edu.epu.quanlyhoso.auth.repository.AccountRepository;
 import vn.edu.epu.quanlyhoso.common.exception.BusinessException;
 import vn.edu.epu.quanlyhoso.common.exception.ResourceNotFoundException;
-import vn.edu.epu.quanlyhoso.lecture.entity.Lecturer;
-import vn.edu.epu.quanlyhoso.lecture.repository.LecturerRepository;
+import vn.edu.epu.quanlyhoso.lecturer.entity.Lecturer;
+import vn.edu.epu.quanlyhoso.lecturer.repository.LecturerRepository;
 import vn.edu.epu.quanlyhoso.project.dto.request.CreateProjectRequest;
 import vn.edu.epu.quanlyhoso.project.dto.request.UpdateProjectBudgetRequest;
 import vn.edu.epu.quanlyhoso.project.dto.request.UpdateProjectStatusRequest;

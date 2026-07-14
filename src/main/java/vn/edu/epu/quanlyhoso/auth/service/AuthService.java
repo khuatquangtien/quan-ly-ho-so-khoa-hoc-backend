@@ -1,11 +1,14 @@
 package vn.edu.epu.quanlyhoso.auth.service;
 
-import lombok.RequiredArgsConstructor;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder; // MỚI THÊM
 import org.springframework.stereotype.Service;
 
+import lombok.RequiredArgsConstructor;
 import vn.edu.epu.quanlyhoso.auth.dto.request.AuthRequest;
 import vn.edu.epu.quanlyhoso.auth.dto.request.RegisterRequest;
 import vn.edu.epu.quanlyhoso.auth.dto.response.AuthResponse;
@@ -15,15 +18,14 @@ import vn.edu.epu.quanlyhoso.auth.repository.AccountRepository;
 import vn.edu.epu.quanlyhoso.auth.repository.RoleRepository;
 import vn.edu.epu.quanlyhoso.common.security.JwtService;
 
-import java.util.HashMap;
-import java.util.Map;
+
+
+
 
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-    // ==========================================
-    // PHẦN 1: CÁC BIẾN KHAI BÁO (THÊM MỚI BÊN DƯỚI)
-    // ==========================================
+    // PHẦN 1: CÁC BIẾN KHAI BÁO 
     private final AccountRepository repository;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
@@ -32,11 +34,9 @@ public class AuthService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
-    // ==========================================
-    // PHẦN 2: HÀM LOGIN (GIỮ NGUYÊN 100% THEO LỆNH SẾP)
-    // ==========================================
+    // PHẦN 2: HÀM LOGIN 
     public AuthResponse authenticate(AuthRequest request) {
-        // 1. Quăng vào máy xác thực. Sai mật khẩu là nó văng Exception vỡ mặt ngay chỗ này
+        // 1. Quăng vào máy xác thực. Sai mật khẩu là nó văng Exception ngay chỗ này
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getUsername(),
@@ -60,37 +60,36 @@ public class AuthService {
     }
 
     
-    // PHẦN 3: HÀM REGISTER (MỚI ĐƯỢC ĐẮP VÀO)
+    // PHẦN 3: HÀM REGISTER 
     public AuthResponse register(RegisterRequest request) {
         // 1. Check xem Username đã bị thằng nào lấy mất chưa
         if (repository.findByUsername(request.getUsername()).isPresent()) {
             throw new RuntimeException("Tên đăng nhập đã tồn tại trong hệ thống!");
         }
 
-        // 2. Tìm Role trong DB (Không truyền thì mặc định id = 2 là LECTURER)
-        Integer roleIdToAssign = (request.getRoleId() != null) ? request.getRoleId() : 2;
-        Role role = roleRepository.findById(roleIdToAssign)
-        .orElseThrow(() -> new RuntimeException("Không tìm thấy quyền (Role) này trong DB!")); 
+        // 2. Gán cứng quyền LECTURER (ID = 2) cho toàn bộ user mới
+        Role role = roleRepository.findById(2)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy quyền (Role) này trong DB!")); 
 
         // 3. Khởi tạo đối tượng Account mới
         Account account = new Account();
         account.setUsername(request.getUsername());
         account.setEmail(request.getEmail());
         
-        // CỰC KỲ QUAN TRỌNG: Mật khẩu trước khi xuống DB phải được băm nát bét (Mã hóa)
+        // 4. Băm nát mật khẩu
         account.setPassword(passwordEncoder.encode(request.getPassword()));
         
         account.setRole(role);
-        account.setIsActive(true); // Khởi tạo xong cho Active luôn
+        account.setIsActive(true);
 
-        // 4. Ném vào két sắt (Lưu xuống MySQL)
+        // 5. Ném vào két sắt
         repository.save(account);
 
-        // 5. Đóng gói Extra Claims y hệt như hàm Login để màng lọc JWT đọc được
+        // 6. Đóng gói Extra Claims
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("role", role.getRoleName());
 
-        // 6. In thẻ Token cấp luôn cho người dùng
+        // 7. In thẻ Token
         var jwtToken = jwtService.generateToken(extraClaims, account);
         
         return new AuthResponse(jwtToken, role.getRoleName());

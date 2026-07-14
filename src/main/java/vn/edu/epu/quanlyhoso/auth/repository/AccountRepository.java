@@ -7,6 +7,8 @@ import vn.edu.epu.quanlyhoso.auth.entity.Account;
 
 import java.util.List;
 import java.util.Optional;
+import vn.edu.epu.quanlyhoso.auth.entity.*;
+
 
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Integer> {

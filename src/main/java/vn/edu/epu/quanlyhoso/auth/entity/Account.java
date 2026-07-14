@@ -7,8 +7,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -51,15 +49,17 @@ public class Account implements UserDetails {
             return List.of(); 
         }
         // 2. Lấy cái chữ "ADMIN" từ DB, nhét vào cái bao bì SimpleGrantedAuthority để Spring nó hiểu
-        return List.of(new SimpleGrantedAuthority(this.role.getRoleName()));}
-        
-        @Override
-        public boolean isAccountNonExpired() { return true; }
-        @Override
-        public boolean isAccountNonLocked() { return true; }
-        @Override
-        public boolean isCredentialsNonExpired() { return true; }
-        @Override
-        public boolean isEnabled() { return true; }
+        return List.of(new SimpleGrantedAuthority(this.role.getRoleName()));
+    }
+    @Override
+    public boolean isAccountNonExpired() { return true; }
+    @Override
+    public boolean isAccountNonLocked() { return true; }
+    @Override
+    public boolean isCredentialsNonExpired() { return true; }
+    @Override
+    public boolean isEnabled() { 
+        // Lấy chính cái trạng thái trong Database ra để cho Spring Security kiểm tra
+        return this.isActive != null ? this.isActive : false; 
+    }
 }
-
