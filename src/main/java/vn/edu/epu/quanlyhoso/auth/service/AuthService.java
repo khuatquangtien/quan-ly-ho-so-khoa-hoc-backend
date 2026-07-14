@@ -13,6 +13,7 @@ import vn.edu.epu.quanlyhoso.auth.security.*;
 import vn.edu.epu.quanlyhoso.auth.dto.*;
 import vn.edu.epu.quanlyhoso.auth.dto.request.AuthRequest;
 import vn.edu.epu.quanlyhoso.auth.dto.request.RegisterRequest;
+import vn.edu.epu.quanlyhoso.auth.dto.response.AuthResponse;
 import vn.edu.epu.quanlyhoso.auth.entity.*;
 
 
