@@ -16,7 +16,6 @@ import vn.edu.epu.quanlyhoso.auth.entity.Account;
 import vn.edu.epu.quanlyhoso.auth.entity.Role;
 import vn.edu.epu.quanlyhoso.auth.repository.AccountRepository;
 import vn.edu.epu.quanlyhoso.auth.repository.RoleRepository;
-import vn.edu.epu.quanlyhoso.common.security.JwtService;
 
 
 

@@ -47,4 +47,4 @@ public class AccountController {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
     }	
-}
+}					

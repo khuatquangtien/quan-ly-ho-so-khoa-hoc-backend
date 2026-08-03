@@ -16,7 +16,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import vn.edu.epu.quanlyhoso.common.security.JwtService;
+import vn.edu.epu.quanlyhoso.auth.service.JwtService;
 
 @Component
 @RequiredArgsConstructor
