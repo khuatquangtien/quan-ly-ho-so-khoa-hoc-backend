@@ -16,6 +16,9 @@ import vn.edu.epu.quanlyhoso.auth.entity.Account;
 import vn.edu.epu.quanlyhoso.auth.entity.Role;
 import vn.edu.epu.quanlyhoso.auth.repository.AccountRepository;
 import vn.edu.epu.quanlyhoso.auth.repository.RoleRepository;
+import vn.edu.epu.quanlyhoso.auth.dto.response.CurrentUserResponse;
+import vn.edu.epu.quanlyhoso.lecturer.entity.Lecturer;
+import vn.edu.epu.quanlyhoso.lecturer.repository.LecturerRepository;
 
 
 
@@ -32,6 +35,15 @@ public class AuthService {
     // Hai thanh gươm mới dành cho tính năng Đăng Ký
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final LecturerRepository lecturerRepository;
+
+    public CurrentUserResponse getCurrentUser(String username) {
+        Account account = repository.findByUsername(username).orElseThrow();
+        Lecturer lecturer = lecturerRepository.findByAccountId(account.getId()).orElse(null);
+        return new CurrentUserResponse(account.getId(), account.getUsername(), account.getEmail(),
+                account.getRole().getRoleName(), lecturer == null ? null : lecturer.getId(),
+                lecturer == null ? null : lecturer.getFullName(), lecturer == null ? null : lecturer.getFaculty());
+    }
 
     // PHẦN 2: HÀM LOGIN 
     public AuthResponse authenticate(AuthRequest request) {

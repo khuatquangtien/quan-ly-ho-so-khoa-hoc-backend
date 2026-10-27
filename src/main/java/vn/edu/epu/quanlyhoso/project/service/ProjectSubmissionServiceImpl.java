@@ -34,6 +34,7 @@ public class ProjectSubmissionServiceImpl implements ProjectSubmissionService {
     private final ProjectSearchIndexService projectSearchIndexService;
     private final CurrentUserService currentUserService;
     private final LecturerRepository lecturerRepository;
+    private final ProjectAccessService projectAccessService;
 
     public ProjectSubmissionServiceImpl(
             ProjectRepository projectRepository,
@@ -41,13 +42,14 @@ public class ProjectSubmissionServiceImpl implements ProjectSubmissionService {
             ProjectSubmissionMapper projectSubmissionMapper,
             ProjectSearchIndexService projectSearchIndexService,
             CurrentUserService currentUserService,
-            LecturerRepository lecturerRepository) {
+            LecturerRepository lecturerRepository, ProjectAccessService projectAccessService) {
         this.projectRepository = projectRepository;
         this.projectSubmissionRepository = projectSubmissionRepository;
         this.projectSubmissionMapper = projectSubmissionMapper;
         this.projectSearchIndexService = projectSearchIndexService;
         this.currentUserService = currentUserService;
         this.lecturerRepository = lecturerRepository;
+        this.projectAccessService = projectAccessService;
     }
 
     @Override
@@ -85,10 +87,8 @@ public class ProjectSubmissionServiceImpl implements ProjectSubmissionService {
     @Override
     @Transactional(readOnly = true)
     public ProjectSubmissionResponse getSubmissionByProject(Integer projectId) {
-        // TODO: Apply lecturer/admin visibility rules after Security module is merged.
-        if (!projectRepository.existsById(projectId)) {
-            throw new ResourceNotFoundException("Project not found with id: " + projectId);
-        }
+        Project project = findProjectById(projectId);
+        projectAccessService.assertCanView(project);
         ProjectSubmission submission = projectSubmissionRepository.findByProjectId(projectId)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Final submission not found for project id: " + projectId));

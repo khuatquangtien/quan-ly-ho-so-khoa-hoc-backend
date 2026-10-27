@@ -33,6 +33,7 @@ public class ProjectReportServiceImpl implements ProjectReportService {
     private final ProjectMemberRepository projectMemberRepository;
     private final CurrentUserService currentUserService;
     private final LecturerRepository lecturerRepository;
+    private final ProjectAccessService projectAccessService;
 
     public ProjectReportServiceImpl(
             ProjectRepository projectRepository,
@@ -40,13 +41,14 @@ public class ProjectReportServiceImpl implements ProjectReportService {
             ProjectReportMapper projectReportMapper,
             ProjectMemberRepository projectMemberRepository,
             CurrentUserService currentUserService,
-            LecturerRepository lecturerRepository) {
+            LecturerRepository lecturerRepository, ProjectAccessService projectAccessService) {
         this.projectRepository = projectRepository;
         this.projectReportRepository = projectReportRepository;
         this.projectReportMapper = projectReportMapper;
         this.projectMemberRepository = projectMemberRepository;
         this.currentUserService = currentUserService;
         this.lecturerRepository = lecturerRepository;
+        this.projectAccessService = projectAccessService;
     }
 
     @Override
@@ -72,10 +74,8 @@ public class ProjectReportServiceImpl implements ProjectReportService {
     @Override
     @Transactional(readOnly = true)
     public List<ProjectReportResponse> getReportsByProject(Integer projectId) {
-        // TODO: Apply lecturer/admin visibility rules after Security module is merged.
-        if (!projectRepository.existsById(projectId)) {
-            throw new ResourceNotFoundException("Project not found with id: " + projectId);
-        }
+        Project project = findProjectById(projectId);
+        projectAccessService.assertCanView(project);
         return projectReportRepository.findByProjectIdOrderBySubmittedAtDesc(projectId).stream()
                 .map(projectReportMapper::toResponse)
                 .toList();

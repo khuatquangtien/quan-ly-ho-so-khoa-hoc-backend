@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,7 @@ import vn.edu.epu.quanlyhoso.lecturer.entity.Lecturer;
 import vn.edu.epu.quanlyhoso.lecturer.repository.LecturerRepository;
 import vn.edu.epu.quanlyhoso.project.dto.request.CreateProjectRequest;
 import vn.edu.epu.quanlyhoso.project.dto.request.UpdateProjectBudgetRequest;
+import vn.edu.epu.quanlyhoso.project.dto.request.UpdateProjectRequest;
 import vn.edu.epu.quanlyhoso.project.dto.request.UpdateProjectStatusRequest;
 import vn.edu.epu.quanlyhoso.project.dto.response.BudgetResponse;
 import vn.edu.epu.quanlyhoso.project.dto.response.ProjectDetailResponse;
@@ -53,6 +55,7 @@ public class ProjectServiceImpl implements ProjectService {
     private final ProjectMapper projectMapper;
     private final BudgetMapper budgetMapper;
     private final ProjectSearchIndexService projectSearchIndexService;
+    private final ProjectAccessService projectAccessService;
 
     public ProjectServiceImpl(
             ProjectRepository projectRepository,
@@ -61,7 +64,8 @@ public class ProjectServiceImpl implements ProjectService {
             ProjectMemberRepository projectMemberRepository,
             ProjectMapper projectMapper,
             BudgetMapper budgetMapper,
-            ProjectSearchIndexService projectSearchIndexService) {
+            ProjectSearchIndexService projectSearchIndexService,
+            ProjectAccessService projectAccessService) {
         this.projectRepository = projectRepository;
         this.accountRepository = accountRepository;
         this.lecturerRepository = lecturerRepository;
@@ -69,6 +73,7 @@ public class ProjectServiceImpl implements ProjectService {
         this.projectMapper = projectMapper;
         this.budgetMapper = budgetMapper;
         this.projectSearchIndexService = projectSearchIndexService;
+        this.projectAccessService = projectAccessService;
     }
 
     @Override
@@ -98,6 +103,72 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    @Transactional
+    public ProjectDetailResponse updateProject(Integer projectId, UpdateProjectRequest request) {
+        Project project = findProjectById(projectId);
+        Account currentAccount = findCurrentAccount();
+        boolean isAdmin = currentAccount.getRole() != null && "ADMIN".equals(currentAccount.getRole().getRoleName());
+        if (!isAdmin) {
+            Lecturer lecturer = lecturerRepository.findByAccountId(currentAccount.getId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Lecturer profile not found"));
+            if (!project.getLeader().getId().equals(lecturer.getId())) {
+                throw new AccessDeniedException("Chỉ chủ nhiệm đề tài mới có quyền chỉnh sửa");
+            }
+        }
+        if (project.getStatus() != ProjectStatus.PENDING) {
+            throw new BusinessException("Chỉ có thể chỉnh sửa đề tài khi đang ở trạng thái chờ duyệt (PENDING)");
+        }
+        validateEstimatedBudget(request.getEstimatedBudget());
+
+        project.setTitle(request.getTitle());
+        project.setObjective(request.getObjective());
+        project.setExpectedProduct(request.getExpectedProduct());
+        project.setEstimatedBudget(request.getEstimatedBudget());
+        project.setFaculty(request.getFaculty());
+
+        if (project.getMembers() != null && !project.getMembers().isEmpty()) {
+            projectMemberRepository.deleteAll(project.getMembers());
+            project.getMembers().clear();
+        }
+        List<ProjectMember> members = createProjectMembers(project, request.getMemberIds(), project.getLeader().getId());
+        if (!members.isEmpty()) {
+            projectMemberRepository.saveAll(members);
+            project.setMembers(members);
+        }
+
+        Project updated = projectRepository.save(project);
+        syncProjectIndex(updated);
+        return projectMapper.toDetailResponse(updated);
+    }
+
+    @Override
+    @Transactional
+    public void deleteProject(Integer projectId) {
+        Project project = findProjectById(projectId);
+        Account currentAccount = findCurrentAccount();
+        boolean isAdmin = currentAccount.getRole() != null && "ADMIN".equals(currentAccount.getRole().getRoleName());
+        if (!isAdmin) {
+            Lecturer lecturer = lecturerRepository.findByAccountId(currentAccount.getId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Lecturer profile not found"));
+            if (!project.getLeader().getId().equals(lecturer.getId())) {
+                throw new AccessDeniedException("Chỉ chủ nhiệm đề tài mới có quyền xóa");
+            }
+        }
+        if (project.getStatus() != ProjectStatus.PENDING) {
+            throw new BusinessException("Chỉ có thể xóa đề tài khi đang ở trạng thái chờ duyệt (PENDING)");
+        }
+        if (project.getMembers() != null && !project.getMembers().isEmpty()) {
+            projectMemberRepository.deleteAll(project.getMembers());
+        }
+        try {
+            projectSearchIndexService.deleteProject(projectId);
+        } catch (Exception e) {
+            LOGGER.warn("Failed to delete search index for project id: {}", projectId, e);
+        }
+        projectRepository.delete(project);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<ProjectResponse> searchProjects(
             ProjectStatus status,
@@ -107,7 +178,6 @@ public class ProjectServiceImpl implements ProjectService {
             BigDecimal maxEstimatedBudget,
             BigDecimal minApprovedBudget,
             BigDecimal maxApprovedBudget) {
-        // TODO: Restrict this operation to ROLE_ADMIN after Security module is merged.
         validateBudgetRange(minEstimatedBudget, maxEstimatedBudget, "estimated budget");
         validateBudgetRange(minApprovedBudget, maxApprovedBudget, "approved budget");
 
@@ -122,10 +192,8 @@ public class ProjectServiceImpl implements ProjectService {
 
         if (hasLuceneCriteria(criteria)) {
             try {
-                // Lucene is only the search layer: it returns candidate IDs, then MySQL reloads source-of-truth data.
                 List<Integer> projectIds = projectSearchIndexService.searchProjectIds(criteria);
                 List<Project> luceneProjects = loadProjectsByIdsPreservingOrder(projectIds);
-                // Keyword and budget conditions already ran in Lucene; rechecking keyword here can drop fuzzy/accent-insensitive hits.
                 return projectMapper.toResponseList(filterNonLuceneFilters(luceneProjects, criteria));
             } catch (RuntimeException exception) {
                 LOGGER.warn("Lucene project search failed. Falling back to MySQL filtering.", exception);
@@ -138,19 +206,33 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional(readOnly = true)
     public ProjectDetailResponse getProjectById(Integer projectId) {
-        // TODO: Apply lecturer/admin visibility rules after Security module is merged.
         Project project = findProjectById(projectId);
+        projectAccessService.assertCanView(project);
         return projectMapper.toDetailResponse(project);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ProjectResponse> getMyProjects() {
+        Lecturer lecturer = findCurrentLecturer();
+        Map<Integer, Project> unique = new java.util.LinkedHashMap<>();
+        projectRepository.findByLeaderId(lecturer.getId()).forEach(p -> unique.put(p.getId(), p));
+        projectMemberRepository.findByLecturer_Id(lecturer.getId()).forEach(m -> unique.put(m.getProject().getId(), m.getProject()));
+        return projectMapper.toResponseList(new ArrayList<>(unique.values()));
     }
 
     @Override
     @Transactional
     public ProjectDetailResponse updateProjectStatus(Integer projectId, UpdateProjectStatusRequest request) {
-        // TODO: Restrict this operation to ROLE_ADMIN after Security module is merged.
         Project project = findProjectById(projectId);
         ProjectStatus targetStatus = request.getStatus();
         validateAdminStatusTransition(project.getStatus(), targetStatus);
         project.setStatus(targetStatus);
+        if (targetStatus == ProjectStatus.REJECTED) {
+            project.setRejectionReason(request.getReason());
+        } else {
+            project.setRejectionReason(null);
+        }
         Project updatedProject = projectRepository.save(project);
         syncProjectIndex(updatedProject);
         return projectMapper.toDetailResponse(updatedProject);
@@ -159,7 +241,6 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional
     public BudgetResponse updateApprovedBudget(Integer projectId, UpdateProjectBudgetRequest request) {
-        // TODO: Restrict this operation to ROLE_ADMIN after Security module is merged.
         Project project = findProjectById(projectId);
         BigDecimal approvedBudget = request.getApprovedBudget();
         if (approvedBudget == null || approvedBudget.compareTo(BigDecimal.ZERO) < 0) {
@@ -174,7 +255,6 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional(readOnly = true)
     public BudgetResponse getProjectBudget(Integer projectId) {
-        // TODO: Restrict this operation to ROLE_ADMIN after Security module is merged.
         return budgetMapper.toResponse(findProjectById(projectId));
     }
 
@@ -232,14 +312,12 @@ public class ProjectServiceImpl implements ProjectService {
                 .toList();
     }
 
-    // Fallback mode stays database/service based for resilience when the Lucene index is missing or unavailable.
     private List<Project> fallbackSearchProjects(ProjectSearchCriteria criteria) {
         return filterProjects(
                 findProjectsByStatusAndFaculty(criteria.getStatus(), criteria.getFaculty()),
                 criteria);
     }
 
-    // After Lucene search, only non-Lucene filters are applied here.
     private List<Project> filterNonLuceneFilters(List<Project> projects, ProjectSearchCriteria criteria) {
         String normalizedFaculty = normalizeKeyword(criteria.getFaculty());
         return projects.stream()
@@ -316,7 +394,6 @@ public class ProjectServiceImpl implements ProjectService {
             return List.of();
         }
 
-        // memberIds are cooperating lecturers only, so the leader is stored separately and must not appear here.
         Set<Integer> uniqueMemberIds = new HashSet<>();
         List<ProjectMember> members = new ArrayList<>();
         for (Integer memberId : memberIds) {
@@ -326,7 +403,6 @@ public class ProjectServiceImpl implements ProjectService {
             if (!uniqueMemberIds.add(memberId)) {
                 throw new BusinessException("Duplicate project member id: " + memberId);
             }
-            // Duplicate/self-membership checks happen before loading lecturers to fail fast on invalid request shape.
             if (memberId.equals(leaderId)) {
                 throw new BusinessException("Project leader must not be included in cooperating lecturer ids");
             }
@@ -341,7 +417,6 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     private void validateAdminStatusTransition(ProjectStatus currentStatus, ProjectStatus targetStatus) {
-        // Admin approval/rejection only supports PENDING -> ONGOING and PENDING -> REJECTED.
         if (targetStatus != ProjectStatus.ONGOING && targetStatus != ProjectStatus.REJECTED) {
             throw new InvalidProjectStatusException("Admin status update only supports ONGOING or REJECTED");
         }
@@ -368,10 +443,14 @@ public class ProjectServiceImpl implements ProjectService {
                 .orElseThrow(() -> new ResourceNotFoundException("Lecturer not found with id: " + lecturerId));
     }
 
-    private Lecturer findCurrentLecturer() {
+    private Account findCurrentAccount() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        Account currentAccount = accountRepository.findByUsername(username)
+        return accountRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("Current account not found"));
+    }
+
+    private Lecturer findCurrentLecturer() {
+        Account currentAccount = findCurrentAccount();
         return lecturerRepository.findByAccountId(currentAccount.getId())
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Lecturer profile not found for current account"));
