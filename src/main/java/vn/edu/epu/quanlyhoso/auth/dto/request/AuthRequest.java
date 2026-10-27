@@ -3,7 +3,7 @@ package vn.edu.epu.quanlyhoso.auth.dto.request;
 public class AuthRequest {
     private String username;
     private String password;
-
+    private String keyString;
     // Tự viết Constructor & Getter để khỏi cần Lombok
     public AuthRequest() {}
     

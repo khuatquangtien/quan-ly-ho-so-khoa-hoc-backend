@@ -1,4 +1,4 @@
-package vn.edu.epu.quanlyhoso.auth.dto.respone;
+package vn.edu.epu.quanlyhoso.auth.dto.response;
 
 public class AuthResponse {
     private String token;

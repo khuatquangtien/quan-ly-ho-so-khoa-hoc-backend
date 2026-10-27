@@ -1,8 +1,8 @@
 package vn.edu.epu.quanlyhoso.admin.service;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import lombok.RequiredArgsConstructor;
 import vn.edu.epu.quanlyhoso.auth.entity.Account;
 import vn.edu.epu.quanlyhoso.auth.entity.Role;
 import vn.edu.epu.quanlyhoso.auth.repository.AccountRepository;
@@ -29,4 +29,5 @@ public class AdminService {
 
         return "Cấp quyền " + newRole.getRoleName() + " cho tài khoản " + username + " thành công!";
     }
+
 }

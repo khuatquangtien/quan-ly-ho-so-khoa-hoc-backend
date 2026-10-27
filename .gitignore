@@ -44,7 +44,6 @@ data/lucene/
 
 ### VS Code ###
 .vscode/
-<<<<<<< HEAD
 
 # Compiled class file
 *.class
@@ -52,15 +51,15 @@ data/lucene/
 .mtj.tmp/
 hs_err_pid*
 replay_pid*
+
 # Bỏ qua các file chứa biến môi trường và mật khẩu
 .env
 .env.*
 application-local.properties
 application-secret.properties
-#xoá bỏ file ds_Store
-.DS_Store
-=======
-# bỏ qua file .ds_store 
-.DS_Store
+
+# File người dùng tải lên (lưu cục bộ)
+uploads/
+
+# Bỏ qua file .DS_Store
 **/.DS_Store
->>>>>>> quanlyhoidongvaminhchung

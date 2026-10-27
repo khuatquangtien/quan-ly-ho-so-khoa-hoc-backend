@@ -9,12 +9,13 @@ import vn.edu.epu.quanlyhoso.auth.entity.Account;
 import vn.edu.epu.quanlyhoso.lecturer.entity.Lecturer;
 
 public interface LecturerRepository extends JpaRepository<Lecturer, Integer> {
-
-    Optional<Lecturer> findByAccountId(Integer accountId);
-    
+    //Tìm hồ sơ dựa vào Account
     Optional<Lecturer> findByAccount(Account account);
     
+    
+    Optional<Lecturer> findByAccountId(Integer accountId);
+    
+    
     List<Lecturer> findByFaculty(String faculty);
+    List<Lecturer> findByFullNameContainingIgnoreCaseOrFacultyContainingIgnoreCase(String fullName, String faculty);
 }
-
- 

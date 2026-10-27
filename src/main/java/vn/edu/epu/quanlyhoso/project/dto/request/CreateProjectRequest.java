@@ -25,9 +25,6 @@ public class CreateProjectRequest {
     @Size(max = 100)
     private String faculty;
 
-    @NotNull
-    private Integer leaderId;
-
     private List<Integer> memberIds;
 
     public CreateProjectRequest() {
@@ -71,14 +68,6 @@ public class CreateProjectRequest {
 
     public void setFaculty(String faculty) {
         this.faculty = faculty;
-    }
-
-    public Integer getLeaderId() {
-        return leaderId;
-    }
-
-    public void setLeaderId(Integer leaderId) {
-        this.leaderId = leaderId;
     }
 
     public List<Integer> getMemberIds() {

@@ -1,11 +1,16 @@
-package vn.edu.epu.quanlyhoso.auth.controller;
+
+package vn.edu.epu.quanlyhoso.lecturer.controller;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import vn.edu.epu.quanlyhoso.auth.dto.request.ProfileRequest;
-import vn.edu.epu.quanlyhoso.auth.service.ProfileService;
+import vn.edu.epu.quanlyhoso.lecturer.dto.ProfileRequest;
+import vn.edu.epu.quanlyhoso.lecturer.service.ProfileService;
 
 @RestController
 @RequestMapping("/api/profile")

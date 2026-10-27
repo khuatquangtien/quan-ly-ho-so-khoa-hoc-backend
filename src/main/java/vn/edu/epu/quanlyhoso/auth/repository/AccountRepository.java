@@ -5,10 +5,18 @@ import org.springframework.stereotype.Repository;
 
 import vn.edu.epu.quanlyhoso.auth.entity.Account;
 
+import java.util.List;
 import java.util.Optional;
+import vn.edu.epu.quanlyhoso.auth.entity.*;
+
 
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Integer> {
     //Tìm hồ sơ dựa vào username
     Optional<Account> findByUsername(String username);
+    Optional<Account> findByEmail(String email);
+    long countByIsActiveTrue();
+    // xoá tài khoản
+    void deleteByid(Integer id);
+    
 }

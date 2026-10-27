@@ -1,4 +1,4 @@
-package vn.edu.epu.quanlyhoso.auth.dto.request;
+package vn.edu.epu.quanlyhoso.lecturer.dto;
 
 import lombok.Data;
 
